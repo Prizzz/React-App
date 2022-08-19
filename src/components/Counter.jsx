@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-function App() {
+const Counter = () => {
   const [count, setCount] = useState(0);
-  const [value, setValue] = useState("12");
+  const [value, setValue] = useState("text");
 
   return (
-    <div className="App">
+    <div className="Counter">
       <h2>{count}</h2>
       <h2>{value}</h2>
       <button onClick={() => setCount(count + 1)}>Increment</button>
@@ -17,6 +17,6 @@ function App() {
       />
     </div>
   );
-}
+};
 
-export default App;
+export default Counter;
