@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #root {
@@ -36,4 +37,25 @@
 .post-exit-active {
   opacity: 0;
   transition: all 500ms ease-in;
+}
+
+.page__wrapper {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  column-gap: 5px;
+}
+
+.page {
+  padding: 5px 10px;
+  color: dodgerblue;
+  border: 1px solid dodgerblue;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.page__current {
+  color: #0059b3;
+  border: 2px solid #0059b3;
+  font-weight: 700;
 }

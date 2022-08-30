@@ -1,31 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "./styles/App.css";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import PostFilter from "./components/PostFilter";
-import PostService from "./components/API/PostServie";
+import PostService from "./components/API/PostServies";
 import { usePosts } from "./components/hooks/usePosts";
+import { useFetching } from "./components/hooks/useFetching";
 import MyModal from "./components/UI/modal/MyModal";
 import MyButton from "./components/UI/button/MyButton";
 import Loader from "./components/UI/Loader/Loader";
+import Pagination from "./components/UI/pagination/Pagination";
+import { getPagesCount } from "./utils/pages";
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({ sort: "", query: "" });
   const [modal, setModal] = useState(false);
-  const [isPostsLoading, setIsPostsLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+
+  const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
+    const response = await PostService.getAll(limit, page);
+    setPosts(response.data);
+    const totalCount = response.headers["x-total-count"];
+    setTotalPages(getPagesCount(totalCount, limit));
+  });
 
   useEffect(() => {
     fetchPosts();
-  }, []);
-
-  async function fetchPosts() {
-    setIsPostsLoading(true);
-    const posts = await PostService.getAll();
-    setPosts(posts);
-    setIsPostsLoading(false);
-  }
+  }, [page]);
 
   function createPost(newPost) {
     setPosts([...posts, newPost]);
@@ -47,6 +52,7 @@ function App() {
 
       <hr style={{ margin: "15px 0" }} />
       <PostFilter filter={filter} setFilter={setFilter} />
+      {postError && <h1>Произошла ошибка: {postError}</h1>}
       {isPostsLoading ? (
         <div
           style={{
@@ -64,6 +70,7 @@ function App() {
           title="Список постов"
         />
       )}
+      <Pagination page={page} setPage={setPage} totalPages={totalPages} />
     </div>
   );
 }
