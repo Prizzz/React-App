@@ -7,7 +7,8 @@
 
 #root {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App {
@@ -58,4 +59,19 @@
   color: #0059b3;
   border: 2px solid #0059b3;
   font-weight: 700;
+}
+
+.navbar {
+  height: 50px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  background: lightblue;
+}
+
+.navbar__links {
+  display: flex;
+  column-gap: 10px;
+  margin-left: auto;
 }
