@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import PostService from "../components/API/PostServies";
-import { useFetching } from "../components/hooks/useFetching";
+import PostService from "../API/PostServies";
+import { useFetching } from "../hooks/useFetching";
 import Loader from "../components/UI/Loader/Loader";
 
 const PostIdPage = () => {
@@ -36,9 +36,9 @@ const PostIdPage = () => {
       {isComLoading ? (
         <Loader />
       ) : (
-        <div>
+        <div style={{ width: 800 }}>
           {comments.map((comm) => (
-            <div style={{ marginTop: 10 }}>
+            <div style={{ marginTop: 10 }} key={comm.id}>
               <h5>{comm.email}</h5>
               <div>{comm.body}</div>
             </div>
